@@ -42,7 +42,7 @@ Munshi works inside the distributor's existing habits. Customers keep ordering o
 - Name: Munshi (the traditional clerk who writes up a trader's books).
 - Primary action: start a pilot via WhatsApp.
 - Page background must be light (user requirement).
-- Selling copy is English with Hinglish accents; Hinglish should be reviewed by a native speaker.
+- Selling copy is English with Hinglish accents in Latin letters only (no Devanagari); Hinglish should be reviewed by a native speaker.
 
 ## Evidence on Hand
 

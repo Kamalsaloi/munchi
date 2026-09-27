@@ -14,7 +14,7 @@ Search `index.html` for `TODO` and replace the placeholders:
 - `https://munshi.example` in the `og:url` and `og:image` tags: set the real domain
 - `assets/parchi-sample.jpg` is a staged stand-in rendered from a handwriting font. Replace it with a real photo of a handwritten order slip (with the customer's permission, names changed) before launch
 
-Have a native speaker review the Hindi (Devanagari) and Hinglish lines. All order data on the page is a labelled sample.
+Have a native speaker review the Hinglish lines. All order data on the page is a labelled sample.
 
 ## Files
 

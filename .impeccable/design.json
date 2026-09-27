@@ -4,31 +4,96 @@
   "title": "Design System: Munshi",
   "extensions": {
     "colorMeta": {
-      "ledger-teal": { "role": "primary", "displayName": "Ledger Teal", "tonalRamp": ["#e2eef1", "#0f5566", "#0b4452"] },
-      "action-red": { "role": "primary", "displayName": "Action Red", "tonalRamp": ["#fbe6e2", "#b8321f", "#962817"] },
-      "selection-yellow": { "role": "secondary", "displayName": "Selection Yellow", "tonalRamp": ["#fff2bd", "#ffd94d"] },
-      "screen-ground": { "role": "neutral", "displayName": "Screen Ground" },
-      "ink": { "role": "neutral", "displayName": "Ink" },
-      "pencil": { "role": "neutral", "displayName": "Pencil" }
+      "ledger-teal": {
+        "role": "primary",
+        "displayName": "Ledger Teal",
+        "tonalRamp": [
+          "#e2eef1",
+          "#0f5566",
+          "#0b4452"
+        ]
+      },
+      "action-red": {
+        "role": "primary",
+        "displayName": "Action Red",
+        "tonalRamp": [
+          "#fbe6e2",
+          "#b8321f",
+          "#962817"
+        ]
+      },
+      "selection-yellow": {
+        "role": "secondary",
+        "displayName": "Selection Yellow",
+        "tonalRamp": [
+          "#fff2bd",
+          "#ffd94d"
+        ]
+      },
+      "screen-ground": {
+        "role": "neutral",
+        "displayName": "Screen Ground"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink"
+      },
+      "pencil": {
+        "role": "neutral",
+        "displayName": "Pencil"
+      }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Hero headline only." },
-      "display-devanagari": { "displayName": "Devanagari billing", "purpose": "One line under a key headline." },
-      "mono": { "displayName": "Mono", "purpose": "Key caps, times and machine labels only." }
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headline only."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Key caps, times and machine labels only."
+      }
     },
     "shadows": [
-      { "name": "key-cap", "value": "0 2px 0 #962817", "purpose": "The Approve key only; a key is a physical object." }
+      {
+        "name": "key-cap",
+        "value": "0 2px 0 #962817",
+        "purpose": "The Approve key only; a key is a physical object."
+      }
     ],
     "motion": [
-      { "name": "ease-out-expo", "value": "cubic-bezier(.16, 1, .3, 1)", "purpose": "All state transitions." },
-      { "name": "scan-step", "value": "420ms", "purpose": "Selection bar reading down voucher lines." },
-      { "name": "ink-step", "value": "260ms", "purpose": "Each line turning from pencil to ink on approval." }
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "All state transitions."
+      },
+      {
+        "name": "scan-step",
+        "value": "420ms",
+        "purpose": "Selection bar reading down voucher lines."
+      },
+      {
+        "name": "ink-step",
+        "value": "260ms",
+        "purpose": "Each line turning from pencil to ink on approval."
+      }
     ],
     "breakpoints": [
-      { "name": "phone", "value": "560px" },
-      { "name": "screen-stack", "value": "640px" },
-      { "name": "dock", "value": "900px" },
-      { "name": "hero-stack", "value": "1040px" }
+      {
+        "name": "phone",
+        "value": "560px"
+      },
+      {
+        "name": "screen-stack",
+        "value": "640px"
+      },
+      {
+        "name": "dock",
+        "value": "900px"
+      },
+      {
+        "name": "hero-stack",
+        "value": "1040px"
+      }
     ]
   },
   "components": [
@@ -60,14 +125,41 @@
   "narrative": {
     "northStar": "The Voucher Screen",
     "overview": "Pages are drawn in the grammar of the order-entry screen distributor staff use all day. Proof is the screen doing its job: a messy order becoming a draft, a person approving it, the lines turning to ink. Calm and sparse; colour is reserved for state.",
-    "keyCharacteristics": ["Cool light ground", "One working screen per first viewport", "Pencil draft, ink approved", "Red only where a person acts", "No eyebrows or kickers"],
-    "rules": [
-      { "name": "The Hand-Up Rule", "body": "Red is used only where a person acts.", "section": "colors" },
-      { "name": "The Pencil-to-Ink Rule", "body": "Unapproved content is pencil grey; approved content is ink.", "section": "colors" },
-      { "name": "The Two-Script Rule", "body": "One Devanagari line under a key headline, in teal.", "section": "typography" },
-      { "name": "The No-Costume Mono Rule", "body": "Mono is for keys, times and machine labels only.", "section": "typography" }
+    "keyCharacteristics": [
+      "Cool light ground",
+      "One working screen per first viewport",
+      "Pencil draft, ink approved",
+      "Red only where a person acts",
+      "No eyebrows or kickers"
     ],
-    "dos": ["Show the screen working instead of listing features", "Keep one note per flagged line", "Label sample data as sample"],
-    "donts": ["No eyebrows, kickers or numbered badges", "No chips on every row", "No warm cream grounds or decorative shadows", "No invented customers, metrics, prices or testimonials"]
+    "rules": [
+      {
+        "name": "The Hand-Up Rule",
+        "body": "Red is used only where a person acts.",
+        "section": "colors"
+      },
+      {
+        "name": "The Pencil-to-Ink Rule",
+        "body": "Unapproved content is pencil grey; approved content is ink.",
+        "section": "colors"
+      },
+      {
+        "name": "The No-Costume Mono Rule",
+        "body": "Mono is for keys, times and machine labels only.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "Show the screen working instead of listing features",
+      "Keep one note per flagged line",
+      "Label sample data as sample"
+    ],
+    "donts": [
+      "No eyebrows, kickers or numbered badges",
+      "No chips on every row",
+      "No warm cream grounds or decorative shadows",
+      "No invented customers, metrics, prices or testimonials",
+      "No Devanagari script; Hinglish in Latin letters"
+    ]
   }
 }

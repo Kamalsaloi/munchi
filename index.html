@@ -21,7 +21,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&family=Anek+Latin:wdth,wght@75..125,400..800&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wdth,wght@75..125,400..800&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
   /* ---------- The Voucher Screen: tokens ---------- */
@@ -38,13 +38,14 @@
     --ink: #1a1e21;
     --ink-2: #3b464c;
     --pencil: #56626a;      /* draft text, before approval */
-    --red: #b8321f;         /* only where a person must act */
+    --wa: #008069;          /* WhatsApp actions */
+    --wa-dark: #006e5a;
+    --red: #b8321f;         /* a person must act inside the voucher */
     --red-dark: #962817;
     --red-tint: #fbe6e2;
     --learned: #6e5100;
 
-    --sans: "Anek Latin", "Anek Devanagari", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    --deva: "Anek Devanagari", "Anek Latin", system-ui, sans-serif;
+    --sans: "Anek Latin", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --mono: "Spline Sans Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
 
     --r: 6px;
@@ -70,7 +71,6 @@
   a { color: inherit; text-underline-offset: .2em; text-decoration-thickness: 1px; }
   :focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; box-shadow: 0 0 0 6px var(--hl); border-radius: 4px; }
   svg { flex: none; }
-  .deva { font-family: var(--deva); }
   .num { font-variant-numeric: tabular-nums lining-nums; }
   .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
   @media (max-width: 560px) { .wrap { padding: 0 16px; } body { font-size: 17px; } }
@@ -96,8 +96,8 @@
     transition: background-color .2s var(--ease), box-shadow .2s var(--ease);
   }
   .btn svg { width: 22px; height: 22px; }
-  .btn-act { background: var(--red); color: #fff; }
-  .btn-act:hover { background: var(--red-dark); }
+  .btn-wa { background: var(--wa); color: #fff; }
+  .btn-wa:hover { background: var(--wa-dark); }
   .btn-sm { min-height: 44px; padding: 8px 16px; font-size: 16px; }
   .call { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2); font-weight: 500; }
   .call svg { width: 18px; height: 18px; color: var(--teal); }
@@ -108,12 +108,11 @@
   .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
   .brand svg { width: 28px; height: 32px; }
   .brand b { font-size: 26px; font-weight: 750; font-variation-settings: "wdth" 88; letter-spacing: -.01em; line-height: 1; }
-  .brand .deva { font-size: 16px; color: var(--teal); font-weight: 600; padding-left: 10px; border-left: 1px solid var(--line); line-height: 1; }
   .top nav { display: flex; align-items: center; gap: 24px; }
   .top nav a:not(.btn) { font-size: 16px; font-weight: 500; color: var(--ink-2); text-decoration: none; }
   .top nav a:not(.btn):hover { text-decoration: underline; }
   @media (max-width: 760px) { .top .navlink { display: none; } }
-  @media (max-width: 400px) { .brand .deva { display: none; } .top .btn-sm span { display: none; } }
+  @media (max-width: 400px) { .top .btn-sm span { display: none; } }
 
   /* ---------- Hero ---------- */
   .hero { padding: 56px 0 88px; }
@@ -123,12 +122,11 @@
 
   h1 { margin: 8px 0 24px; font-size: clamp(2.5rem, 5.4vw, 4.6rem); font-weight: 800; letter-spacing: -.02em; }
   h1 .l1 { display: block; font-size: clamp(2.5rem, 5.4vw, 4.6rem); line-height: .98; font-variation-settings: "wdth" 82; text-wrap: balance; }
-  h1 .l2 { display: block; margin-top: 14px; font-size: clamp(1.6rem, 3vw, 2.5rem); line-height: 1.2; color: var(--teal); font-weight: 700; font-variation-settings: "wdth" 90; }
   .lede { font-size: clamp(1.1rem, 1.5vw, 1.25rem); color: var(--ink-2); max-width: 34em; margin: 0 0 32px; }
   .lede b { color: var(--ink); font-weight: 650; }
   .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
   .cta-note { margin: 18px 0 0; font-size: 16px; color: var(--ink-2); max-width: 32em; }
-  @media (max-width: 560px) { .cta .btn-act { width: 100%; justify-content: center; } }
+  @media (max-width: 560px) { .cta .btn-wa { width: 100%; justify-content: center; } }
 
   /* ---------- The voucher screen ---------- */
   .screen { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
@@ -147,7 +145,7 @@
   .panel[hidden] { display: none; }
   .src-meta { font-size: 14px; line-height: 1.4; color: var(--pencil); margin-bottom: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
   .wa-app { max-width: 430px; border: 1px solid var(--line-2); border-radius: 8px; overflow: hidden; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-  .wa-top { display: flex; align-items: center; gap: 10px; background: #008069; color: #fff; padding: 8px 12px; }
+  .wa-top { display: flex; align-items: center; gap: 10px; background: var(--wa); color: #fff; padding: 8px 12px; }
   .wa-top svg { width: 20px; height: 20px; }
   .wa-av { width: 34px; height: 34px; border-radius: 50%; background: #dfe5e7; color: #54656f; display: grid; place-items: center; font-size: 13px; font-weight: 600; flex: none; }
   .wa-top b { display: block; font-size: 15px; font-weight: 600; line-height: 1.2; }
@@ -235,7 +233,6 @@
   section.band.white { background: var(--panel); }
   @media (max-width: 720px) { section.band { padding: 64px 0; } }
   h2 { font-weight: 800; font-size: clamp(2rem, 4vw, 3.3rem); line-height: 1.02; letter-spacing: -.015em; font-variation-settings: "wdth" 84; margin: 0 0 14px; max-width: 18em; text-wrap: balance; }
-  h2 .deva { display: block; font-size: clamp(1.3rem, 2.4vw, 2rem); color: var(--teal); font-weight: 700; margin-top: 10px; letter-spacing: 0; font-variation-settings: "wdth" 95; }
   .intro { font-size: 1.15rem; color: var(--ink-2); max-width: 38em; margin: 0 0 48px; }
 
   /* one morning: filmstrip */
@@ -318,7 +315,7 @@
   .close h2 { margin-bottom: 12px; }
   .close p { margin: 0; color: var(--ink-2); font-size: 1.15rem; max-width: 32em; }
   .close .cta { flex-direction: column; align-items: flex-start; }
-  @media (max-width: 560px) { .close .cta { align-items: stretch; } .close .btn-act { justify-content: center; } }
+  @media (max-width: 560px) { .close .cta { align-items: stretch; } .close .btn-wa { justify-content: center; } }
 
   footer { padding: 32px 0 calc(32px + env(safe-area-inset-bottom)); font-size: 15px; color: var(--ink-2); }
   footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; }
@@ -358,12 +355,12 @@
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Munshi home">
       <svg viewBox="0 0 28 32" aria-hidden="true"><rect x="1" y="1" width="26" height="30" rx="4" fill="#0f5566"/><rect x="1" y="1" width="5" height="30" fill="#0b4452"/><rect x="9" y="8" width="14" height="4" rx="1" fill="#ffd94d"/><path d="M9 17.5h14M9 22.5h9" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
-      <b>Munshi</b><span class="deva" lang="hi">मुंशी</span>
+      <b>Munshi</b>
     </a>
     <nav aria-label="Main">
       <a class="navlink" href="#how">How it works</a>
       <!-- TODO: replace 91XXXXXXXXXX with the real WhatsApp number (4 places on this page) -->
-      <a class="btn btn-act btn-sm" href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20try%20Munshi%20on%20our%20orders." target="_blank" rel="noopener" aria-label="Chat with Munshi on WhatsApp"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>Chat on WhatsApp</span></a>
+      <a class="btn btn-wa btn-sm" href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20try%20Munshi%20on%20our%20orders." target="_blank" rel="noopener" aria-label="Chat with Munshi on WhatsApp"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>Chat on WhatsApp</span></a>
     </nav>
   </div>
 </header>
@@ -376,11 +373,10 @@
       <div>
         <h1 id="h-hero">
           <span class="l1">Stop retyping every order into Tally.</span>
-          <span class="l2 deva" lang="hi">हर ऑर्डर दोबारा टाइप करना बंद।</span>
         </h1>
         <p class="lede">Munshi reads your customers' orders from WhatsApp, calls, email and <b>handwritten parchis</b>, and prepares the TallyPrime entry. Your staff checks it and presses Approve.</p>
         <div class="cta" id="hero-cta">
-          <a class="btn btn-act" href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20start%20a%202-week%20Munshi%20pilot." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Start a 2-week pilot on WhatsApp</a>
+          <a class="btn btn-wa" href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20start%20a%202-week%20Munshi%20pilot." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Start a 2-week pilot on WhatsApp</a>
           <!-- TODO: real phone number -->
           <a class="call" href="tel:+91XXXXXXXXXX"><svg aria-hidden="true"><use href="#i-phone"/></svg>or call +91 XXXXX XXXXX</a>
         </div>
@@ -399,7 +395,7 @@
               <div class="panel" role="tabpanel" id="p-slip" aria-labelledby="t-slip">
                 <div class="src-meta"><span>Photo from the salesman · 9:42 AM</span></div>
                 <figure class="photo">
-                  <img src="assets/parchi-sample.jpg" width="820" height="473" alt="Photo of a handwritten order slip in Hindi and English: Sharma Hardware, 27/9. Blue pipe 2 inch, 10. Elbow 1 inch, 5 box. Ball valve three-quarter inch, 24. Teflon, 2 dozen. Rate same as last time.">
+                  <img src="assets/parchi-sample.jpg" width="820" height="473" alt="Photo of a handwritten order slip in Hinglish: Sharma Hardware, 27/9. Blue pipe 2 inch, 10. Elbow 1 inch, 5 box. Ball valve three-quarter inch, 24. Teflon, 2 dozen. Rate same as last time.">
                   <figcaption>Sample</figcaption>
                 </figure>
               </div>
@@ -466,9 +462,9 @@
         <li class="frame">
           <time class="num">9:42</time>
           <div class="art art-match" aria-hidden="true">
-            <div class="m"><span class="raw" lang="hi">ब्लू पाइप 2"</span><span class="sku"><svg class="arr"><use href="#i-arrow"/></svg>PVC Pipe 2" Blue</span></div>
+            <div class="m"><span class="raw">blue pipe 2"</span><span class="sku"><svg class="arr"><use href="#i-arrow"/></svg>PVC Pipe 2" Blue</span></div>
             <div class="m"><span class="raw">elbow 1"</span><span class="sku"><svg class="arr"><use href="#i-arrow"/></svg>Elbow 1" PVC</span></div>
-            <div class="m"><span class="raw" lang="hi">टेफ्लॉन</span><span class="sku"><svg class="arr"><use href="#i-arrow"/></svg>Teflon Tape 1/2"</span></div>
+            <div class="m"><span class="raw">teflon</span><span class="sku"><svg class="arr"><use href="#i-arrow"/></svg>Teflon Tape 1/2"</span></div>
           </div>
           <p>Items matched</p>
           <span class="sr-only">Munshi matches each handwritten item to your item list, at the rates from the last invoice.</span>
@@ -510,7 +506,7 @@
   <!-- ============ LEARNING ============ -->
   <section class="band" aria-labelledby="h-learn">
     <div class="wrap">
-      <h2 id="h-learn">It learns how each shop writes. <span class="deva" lang="hi">हर दुकान की अपनी भाषा।</span></h2>
+      <h2 id="h-learn">It learns how each shop writes.</h2>
       <p class="intro">Correct a line once and Munshi remembers it for that customer.</p>
       <div class="alias">
         <div class="bar"><b>Sharma Hardware writes…</b><span class="mode">SAMPLE</span></div>
@@ -545,11 +541,11 @@
   <section class="close" id="close" aria-labelledby="h-close">
     <div class="wrap">
       <div>
-        <h2 id="h-close">Order aaya, entry tayyar. <span class="deva" lang="hi">ऑर्डर आया, एंट्री तैयार।</span></h2>
+        <h2 id="h-close">Order aaya, entry tayyar.</h2>
         <p>Your staff checks. Munshi types.</p>
       </div>
       <div class="cta">
-        <a class="btn btn-act" href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20start%20a%202-week%20Munshi%20pilot." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Start a 2-week pilot on WhatsApp</a>
+        <a class="btn btn-wa" href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20start%20a%202-week%20Munshi%20pilot." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Start a 2-week pilot on WhatsApp</a>
         <a class="call" href="tel:+91XXXXXXXXXX"><svg aria-hidden="true"><use href="#i-phone"/></svg>or call +91 XXXXX XXXXX</a>
       </div>
     </div>
@@ -566,7 +562,7 @@
 </footer>
 
 <div class="dock" id="dock">
-  <a class="btn btn-act" href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20start%20a%202-week%20Munshi%20pilot." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Start a pilot on WhatsApp</a>
+  <a class="btn btn-wa" href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20start%20a%202-week%20Munshi%20pilot." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Start a pilot on WhatsApp</a>
 </div>
 
 <script>
