@@ -1,0 +1,5 @@
+# Impeccable working files (screenshots, decision-page logs, local state)
+.impeccable/review/
+.impeccable/questions/
+.impeccable/live/
+.impeccable/config.local.json

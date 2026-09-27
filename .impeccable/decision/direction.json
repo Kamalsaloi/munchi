@@ -1,0 +1,129 @@
+{
+  "title": "Choose Munshi's visual world",
+  "question": "The roll assigned The Voucher Screen. Keep it, take my pick, adopt an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "The Voucher Screen",
+      "kicker": "THE ROLL",
+      "lineage": "The keyboard-driven accounting screens Indian order staff stare at all day",
+      "thesis": "The page is the entry screen the staff already knows, filling itself in while they watch.",
+      "palette": ["#f3f6f7", "#0f5566", "#ffd94d", "#1a1e21", "#b8321f"],
+      "materials": ["menu list with a yellow highlight bar", "shortcut-key side rail", "voucher form grid with tabular figures"],
+      "viewport": "A light voucher screen: the order text lands on the left, the Sales Order rows fill in on the right, a yellow bar walks down each line, and Approve is the highlighted menu item.",
+      "risk": "Can read as affiliated with the accounting software itself; it translates the grammar with no logos or trade dress. It is also the staff's world more than the owner's.",
+      "raised": [
+        {"from": "challenger-bollywood-poster", "raise": "Headlines pair Latin and Devanagari as billing, so the Hinglish voice is set in type, not just in words."},
+        {"from": "challenger-darkroom", "raise": "One marked line splits the page: before approval everything is pencil-grey draft, after it the entry is inked and final."},
+        {"from": "challenger-plankton", "raise": "A strict state vocabulary on every line: matched, learned, flagged, approved, each with one colour and one icon."},
+        {"from": "challenger-art-paul", "raise": "One spot colour, reserved: red appears only where a person must act."}
+      ]
+    },
+    {
+      "id": "model-pick",
+      "label": "The Duplicate Bill Book",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "Carbon-copy bill and challan pads with printed serial numbers and rubber stamps",
+      "thesis": "Every order is a handwritten top sheet whose carbon copy comes out clean and checked.",
+      "palette": ["#fbf7ee", "#f6d9dd", "#1d3b8f", "#23201c", "#c2362b"],
+      "materials": ["perforated pad edge", "blue carbon-copy ink", "rubber stamp in red", "printed serial numbers"],
+      "viewport": "A bill-book page: the messy handwritten order on the pink top sheet, peeled back to reveal the clean blue-carbon copy beneath, stamped Checked.",
+      "risk": "The warm paper ground sits close to the cream default the critique flagged; it has to commit to the pink carbon sheet and blue ink to escape it."
+    },
+    {
+      "id": "challenger-bollywood-poster",
+      "label": "Painted Film Poster",
+      "verdict": "declined",
+      "lineage": "Hand-painted Bombay film hoardings",
+      "thesis": "Munshi billed like a blockbuster, with WhatsApp, calls and slips montaged around a giant hero.",
+      "palette": ["#c8202f", "#f2c230", "#2a2f6b", "#e9a86a"],
+      "materials": ["airbrush glow", "outlined bilingual display lettering"],
+      "viewport": "A painted montage of order channels orbiting the product name.",
+      "case": "Loses on both axes: owners know the posters but not as their trade, and spectacle hides the calm accuracy claim.",
+      "kept": "Latin and Devanagari paired as billing type.",
+      "risk": "Kitsch around a product that touches the books.",
+      "hero": "https://impeccable.style/worlds/cards/pop-culture-shelf-bollywood-painted-poster-hero.webp"
+    },
+    {
+      "id": "challenger-darkroom",
+      "label": "Darkroom Safelight",
+      "verdict": "declined",
+      "lineage": "Photo printing darkrooms",
+      "thesis": "Drafts develop slowly and become permanent only past a marked point.",
+      "palette": ["#e8912c", "#2b2622", "#d9d4cc"],
+      "materials": ["amber safelight", "test strips"],
+      "viewport": "An order developing in the tray before it is fixed.",
+      "case": "Holds the draft-then-commit idea, but the audience has no link to darkrooms and amber-on-dark breaks the light-background requirement.",
+      "kept": "Preview before commit; irreversible past one marked line.",
+      "risk": "Foreign to the audience.",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-darkroom-safelight-bay-hero.webp"
+    },
+    {
+      "id": "challenger-plankton",
+      "label": "Bioluminescent Wake",
+      "verdict": "declined",
+      "lineage": "Night sea plankton",
+      "thesis": "Order traces glow and fade as Munshi learns.",
+      "palette": ["#05070d", "#2fb6ff", "#8ff0ff"],
+      "materials": ["particle light", "fading trails"],
+      "viewport": "A dark field of glowing order trails.",
+      "case": "Dark, abstract, and unrelated to the trade; loses both axes.",
+      "kept": "A strict state vocabulary per item.",
+      "risk": "The dark ground breaks the light-background requirement.",
+      "hero": "https://impeccable.style/worlds/cards/reefs-bioluminescent-nocturnal-plankton-wake-stars-hero.webp"
+    },
+    {
+      "id": "challenger-art-paul",
+      "label": "Mid-century Magazine",
+      "verdict": "declined",
+      "lineage": "One-mark magazine identity programs",
+      "thesis": "A strict two-column editorial grid with one hidden mark per view.",
+      "palette": ["#111111", "#ffffff", "#d7263d"],
+      "materials": ["serif masthead", "drop initials"],
+      "viewport": "An editorial cover introducing Munshi.",
+      "case": "Elegant but foreign to wholesalers; loses both axes.",
+      "kept": "One reserved spot colour.",
+      "risk": "Reads as a design magazine, not a trade tool.",
+      "hero": "https://impeccable.style/worlds/cards/brand-identity-canon-art-paul-magazine-program-hero.webp"
+    },
+    {
+      "id": "challenger-cloud-quarry",
+      "label": "Cloud Quarry",
+      "verdict": "declined",
+      "lineage": "Surreal quarry of weather blocks",
+      "thesis": "Orders cut and stacked like blocks.",
+      "palette": ["#f4f6f8", "#7fb0d9", "#6d7278"],
+      "materials": ["stencil caps", "measurements"],
+      "viewport": "Stacked order blocks against sky.",
+      "case": "Surreal and ungrounded for this audience; loses both axes.",
+      "kept": "Every quantity carries its unit, in tabular figures.",
+      "risk": "Meaningless to the trade.",
+      "hero": "https://impeccable.style/worlds/cards/dream-surreal-impossible-worlds-cloud-quarry-hero.webp"
+    },
+    {
+      "id": "challenger-type-specimen",
+      "label": "Variable Type Specimen",
+      "verdict": "declined",
+      "lineage": "Foundry specimen sites",
+      "thesis": "One giant letter morphing under a slider.",
+      "palette": ["#fafafa", "#111111", "#ff4d00"],
+      "materials": ["axis sliders", "glyph grid"],
+      "viewport": "A giant glyph with a live axis readout.",
+      "case": "No link to orders or the trade; loses both axes.",
+      "kept": "Hierarchy by type scale alone, no ornament.",
+      "risk": "A designer's toy.",
+      "hero": "https://impeccable.style/worlds/cards/variable-font-specimen-hero.webp"
+    }
+  ],
+  "reroll": { "registers": ["safer", "bolder"] },
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "A clean B2B SaaS landing page, executed at full craft.",
+    "palette": ["#ffffff", "#111827", "#16a34a"],
+    "materials": ["clean grid", "product screenshot"],
+    "viewport": "Headline, subtext, WhatsApp button, and a product screenshot on the right.",
+    "risk": "Indistinguishable from every other SaaS page by design."
+  },
+  "steer": true
+}
