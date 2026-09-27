@@ -7,11 +7,12 @@
 <meta name="description" content="Munshi reads orders from WhatsApp, email, phone calls and handwritten parchis, and prepares the TallyPrime entry. Your staff checks it and presses Approve.">
 <meta name="theme-color" content="#0f5566">
 
-<!-- Link previews (WhatsApp, etc.). TODO: set the real URL once the site is live. -->
+<!-- Link previews (WhatsApp, etc.). TODO: replace https://munshi.example with the real domain. -->
+<meta property="og:url" content="https://munshi.example/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Munshi: stop retyping every order into Tally">
 <meta property="og:description" content="WhatsApp, calls, emails and handwritten parchis become ready-to-approve TallyPrime entries.">
-<meta property="og:image" content="og-image.png">
+<meta property="og:image" content="https://munshi.example/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -20,7 +21,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&family=Anek+Latin:wdth,wght@75..125,400..800&family=Kalam:wght@400;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&family=Anek+Latin:wdth,wght@75..125,400..800&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
   /* ---------- The Voucher Screen: tokens ---------- */
@@ -44,7 +45,6 @@
 
     --sans: "Anek Latin", "Anek Devanagari", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --deva: "Anek Devanagari", "Anek Latin", system-ui, sans-serif;
-    --hand: "Kalam", "Anek Devanagari", cursive;
     --mono: "Spline Sans Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
 
     --r: 6px;
@@ -71,7 +71,7 @@
   :focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; box-shadow: 0 0 0 6px var(--hl); border-radius: 4px; }
   svg { flex: none; }
   .deva { font-family: var(--deva); }
-  .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .num { font-variant-numeric: tabular-nums lining-nums; }
   .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
   @media (max-width: 560px) { .wrap { padding: 0 16px; } body { font-size: 17px; } }
 
@@ -96,9 +96,8 @@
     transition: background-color .2s var(--ease), box-shadow .2s var(--ease);
   }
   .btn svg { width: 22px; height: 22px; }
-  .btn-act { background: var(--red); color: #fff; box-shadow: 0 2px 0 var(--red-dark); }
+  .btn-act { background: var(--red); color: #fff; }
   .btn-act:hover { background: var(--red-dark); }
-  .btn-act:active { box-shadow: none; transform: translateY(2px); }
   .btn-sm { min-height: 44px; padding: 8px 16px; font-size: 16px; }
   .call { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2); font-weight: 500; }
   .call svg { width: 18px; height: 18px; color: var(--teal); }
@@ -129,13 +128,10 @@
   .lede b { color: var(--ink); font-weight: 650; }
   .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
   .cta-note { margin: 18px 0 0; font-size: 16px; color: var(--ink-2); max-width: 32em; }
-  .facts-mini { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 10px; }
-  .facts-mini li { display: flex; gap: 10px; align-items: baseline; font-size: 16px; color: var(--ink-2); }
-  .facts-mini svg { width: 18px; height: 18px; color: var(--teal); position: relative; top: 3px; }
   @media (max-width: 560px) { .cta .btn-act { width: 100%; justify-content: center; } }
 
   /* ---------- The voucher screen ---------- */
-  .screen { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: 0 3px 0 var(--line); }
+  .screen { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
   .bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--teal); color: #fff; padding: 10px 16px; font-size: 15px; }
   .bar b { font-weight: 650; letter-spacing: .01em; }
   .bar .mode { font: 500 13px/1 var(--mono); background: rgba(255,255,255,.14); padding: 5px 8px; border-radius: 4px; white-space: nowrap; }
@@ -149,37 +145,58 @@
   .tab[aria-selected="true"] { color: var(--ink); background: var(--panel); border-bottom-color: var(--teal); }
   .panel { padding: 16px; min-height: 196px; }
   .panel[hidden] { display: none; }
-  .src-meta { font: 500 13px/1.3 var(--mono); color: var(--pencil); margin-bottom: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
-  .wa { background: #e7f4ea; color: #16261b; border-radius: 3px 12px 12px 12px; padding: 12px 14px; font-size: 16px; line-height: 1.5; white-space: pre-line; max-width: 380px; }
-  .slip { position: relative; background: #fffdf6; padding: 14px 18px 14px 44px; max-width: 380px; transform: rotate(-1.2deg); box-shadow: 0 6px 10px -6px rgba(0,0,0,.3); background-image: repeating-linear-gradient(transparent 0 29px, #cfdbe6 29px 30px); background-position: 0 12px; font-family: var(--hand); font-size: 19px; line-height: 30px; color: #1d2f6f; }
-  .slip::before { content: ""; position: absolute; left: 30px; top: 0; bottom: 0; border-left: 1.5px solid #e9a3a3; }
-  .slip p { margin: 0; }
+  .src-meta { font-size: 14px; line-height: 1.4; color: var(--pencil); margin-bottom: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .wa-app { max-width: 430px; border: 1px solid var(--line-2); border-radius: 8px; overflow: hidden; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .wa-top { display: flex; align-items: center; gap: 10px; background: #008069; color: #fff; padding: 8px 12px; }
+  .wa-top svg { width: 20px; height: 20px; }
+  .wa-av { width: 34px; height: 34px; border-radius: 50%; background: #dfe5e7; color: #54656f; display: grid; place-items: center; font-size: 13px; font-weight: 600; flex: none; }
+  .wa-top b { display: block; font-size: 15px; font-weight: 600; line-height: 1.2; }
+  .wa-top small { display: block; font-size: 13px; opacity: .85; line-height: 1.2; }
+  .wa-chat { background: #efeae2; padding: 12px 12px 14px 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 3px; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .wa-day { align-self: center; background: #fff; color: #54656f; font-size: 13px; padding: 4px 12px; border-radius: 7px; margin-bottom: 8px; box-shadow: 0 1px .5px rgba(11,20,26,.13); }
+  .wa-msg { position: relative; max-width: 88%; background: #fff; color: #111b21; padding: 6px 9px 7px; border-radius: 7.5px; font-size: 15px; line-height: 1.4; box-shadow: 0 1px .5px rgba(11,20,26,.13); }
+  .wa-msg.tail { border-top-left-radius: 0; margin-top: 4px; }
+  .wa-msg.tail::before { content: ""; position: absolute; left: -8px; top: 0; border-right: 8px solid #fff; border-bottom: 13px solid transparent; }
+  .wa-out { align-self: flex-end; background: #d9fdd3; }
+  .wa-out.tail { border-top-left-radius: 7.5px; border-top-right-radius: 0; }
+  .wa-out.tail::before { left: auto; right: -8px; border-right: 0; border-left: 8px solid #d9fdd3; }
+  .wa-msg p { margin: 0; }
+  .wa-time { float: right; display: inline-flex; align-items: center; gap: 3px; margin: 8px 0 -5px 14px; font-size: 12px; color: #667781; }
+  .wa-time svg { width: 16px; height: 11px; color: #53bdeb; }
+  .photo { margin: 0; position: relative; max-width: 420px; }
+  .photo img { display: block; width: 100%; height: auto; border-radius: 4px; }
+  .photo figcaption { position: absolute; left: 8px; bottom: 8px; font: 600 12px/1 var(--sans); letter-spacing: .04em; text-transform: uppercase; background: rgba(26,30,33,.78); color: #fff; padding: 5px 7px; border-radius: 3px; }
   .call-t { font-size: 16px; line-height: 1.55; color: var(--ink-2); max-width: 420px; }
   .call-t q { quotes: none; font-style: italic; color: var(--ink); }
 
   /* voucher */
-  .vch { padding: 14px 16px 6px; border-top: 1px solid var(--line-2); }
-  .vch-head { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-size: 15px; margin-bottom: 12px; }
-  .vch-head dt { color: var(--pencil); }
-  .vch-head dd { margin: 0; font-weight: 600; }
+  .vch { margin: 14px 16px 16px; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--panel); }
+  .vch-meta { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); background: var(--ground); border-bottom: 1px solid var(--line); }
+  .vch-meta > div { padding: 9px 14px; border-right: 1px solid var(--line); min-width: 0; }
+  .vch-meta > div:last-child { border-right: 0; }
+  .vch-meta span { display: block; font-size: 13px; color: var(--pencil); }
+  .vch-meta b { display: block; font-size: 15px; font-weight: 650; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   table { width: 100%; border-collapse: collapse; font-size: 15px; }
-  caption { text-align: left; font-size: 13px; color: var(--pencil); padding-bottom: 6px; }
-  th { font-weight: 600; font-size: 13px; color: var(--pencil); text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
-  td { padding: 10px 8px; vertical-align: top; border-bottom: 1px dashed var(--line); transition: background-color .35s var(--ease); }
+  th { font-size: 13px; font-weight: 650; color: var(--teal-ink); background: var(--teal-tint); text-align: left; padding: 8px 14px; border-bottom: 1px solid var(--line); }
+  td { padding: 11px 14px; vertical-align: top; border-bottom: 1px solid var(--line-2); }
+  .vch tbody td:first-child { font-weight: 600; }
+  .vch-narr { margin: 0; padding: 9px 14px; font-size: 14px; color: var(--pencil); background: var(--ground); border-top: 1px solid var(--line-2); }
+  .vch-narr b { color: var(--ink-2); font-weight: 650; margin-right: 4px; }
   th.r, td.r { text-align: right; white-space: nowrap; }
-  td .item { font-weight: 600; display: block; }
+  .note { display: block; margin-top: 4px; font-size: 14px; font-weight: 600; color: var(--red-dark); }
+  .note.ok { color: var(--teal-ink); }
   tr.is-active td { background: var(--hl); }
   .vch.is-draft td { color: var(--pencil); }
-  .vch.is-draft td .item { color: var(--ink-2); }
-  .vch.is-inked td { color: var(--ink); border-bottom-style: solid; }
-  tfoot td { border-bottom: 0; font-weight: 700; padding-top: 12px; color: var(--ink) !important; }
+  .vch.is-inked td, .vch tr.ink td { color: var(--ink); border-bottom-style: solid; }
+  td { transition: background-color .35s var(--ease), color .45s var(--ease); }
+  .confirm { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .confirm[hidden] { display: none; }
+  .confirm b { font-size: 15px; font-family: var(--sans); }
+  .confirm button { font: 600 14px/1 var(--sans); min-height: 40px; padding: 6px 12px; border-radius: 4px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+  .confirm button.yes { background: var(--red); border-color: var(--red); color: #fff; }
+  tfoot td { border-bottom: 0; border-top: 3px double var(--ink); font-weight: 700; padding: 11px 14px; color: var(--ink) !important; }
 
-  .st { display: inline-flex; align-items: center; gap: 5px; margin-top: 6px; font: 600 13px/1.2 var(--sans); padding: 4px 8px; border-radius: 4px; }
-  .st svg { width: 14px; height: 14px; }
-  .st-matched { background: var(--teal-tint); color: var(--teal-ink); }
-  .st-learned { background: var(--hl-soft); color: var(--learned); }
-  .st-flag { background: var(--red-tint); color: var(--red-dark); }
-  .st-approved { background: var(--ink); color: #fff; }
 
   /* key rail */
   .rail { display: flex; flex-direction: column; gap: 8px; padding: 12px 10px; background: var(--ground); }
@@ -191,6 +208,8 @@
   .key-act[disabled] { background: var(--line); border-color: var(--line); color: var(--ink-2); box-shadow: none; }
   .status { display: flex; justify-content: space-between; gap: 4px 12px; flex-wrap: wrap; padding: 10px 16px; border-top: 1px solid var(--line); font: 500 14px/1.4 var(--sans); color: var(--ink-2); background: var(--ground); }
   .status .s-main { color: var(--ink); font-weight: 600; }
+  .linkbtn { font: 500 14px/1.4 var(--sans); color: var(--ink-2); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+  .status [hidden] { display: none; }
   .sample { margin: 10px 2px 0; font-size: 14px; color: var(--pencil); }
 
   @media (max-width: 640px) {
@@ -199,10 +218,15 @@
     .rail { flex-direction: row; border-top: 1px solid var(--line-2); padding: 10px; }
     .key { min-height: 56px; }
     .rate { display: none; }
+    .vch { margin: 12px; }
+    .vch-meta { grid-template-columns: 1fr 1fr; }
+    .vch-meta > div:first-child { grid-column: 1 / -1; border-right: 0; border-bottom: 1px solid var(--line); }
+    .vch-meta span, th { font-size: 14px; }
+    td, th { padding-left: 10px; padding-right: 10px; }
     .panel { padding: 14px; min-height: 0; }
     .tab span { font-size: 14px; }
+    .bar .mode { font-size: 14px; }
     .tab .long { display: none; }
-    .vch { padding: 12px 12px 4px; }
     td, th { padding-left: 6px; padding-right: 6px; }
   }
 
@@ -214,51 +238,73 @@
   h2 .deva { display: block; font-size: clamp(1.3rem, 2.4vw, 2rem); color: var(--teal); font-weight: 700; margin-top: 10px; letter-spacing: 0; font-variation-settings: "wdth" 95; }
   .intro { font-size: 1.15rem; color: var(--ink-2); max-width: 38em; margin: 0 0 48px; }
 
-  /* timeline with the marked line */
-  .day { list-style: none; margin: 0; padding: 0; max-width: 860px; }
-  .day li { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 20px; padding: 18px 0; border-top: 1px dashed var(--line); }
-  .day time { font: 600 16px/1.6 var(--mono); color: var(--pencil); }
-  .day h3 { margin: 0 0 4px; font-size: 1.3rem; line-height: 1.25; font-weight: 700; font-variation-settings: "wdth" 92; }
-  .day p { margin: 0; color: var(--ink-2); font-size: 17px; }
-  .day .draft h3 { color: var(--ink-2); }
-  .day .reply { display: inline-block; margin-top: 10px; background: #e7f4ea; color: #16261b; border-radius: 3px 12px 12px 12px; padding: 8px 12px; font-size: 16px; }
-  .day .reply small { display: block; font: 500 13px/1.3 var(--mono); color: #4d6454; }
-  .day li.line { display: block; border-top: 0; padding: 26px 0; }
-  .day li.line div { display: flex; align-items: center; gap: 14px; }
-  .day li.line div::before, .day li.line div::after { content: ""; flex: 1; height: 3px; background: var(--ink); }
-  .day li.line span { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; background: var(--hl); padding: 8px 14px; border-radius: 4px; }
-  .day li.line svg { width: 18px; height: 18px; }
-  .day .inked { border-top-style: solid; border-top-color: var(--ink); }
-  .day .inked h3 { color: var(--ink); }
-  .day .inked time { color: var(--ink); }
-  @media (max-width: 560px) { .day li { grid-template-columns: 64px minmax(0, 1fr); gap: 12px; } .day time { font-size: 14px; } .day li.line span { font-size: 15px; text-align: center; } }
+  /* one morning: filmstrip */
+  .film { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) 44px minmax(0, 1fr); gap: 16px; }
+  .frame time { display: flex; align-items: center; gap: 8px; font: 600 14px/20px var(--mono); color: var(--pencil); margin-right: -16px; }
+  .frame time::before { content: ""; flex: none; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--pencil); background: var(--panel); }
+  .frame time::after { content: ""; flex: 1; border-top: 2px dashed var(--line); }
+  .frame.inked time { color: var(--ink); margin-right: 0; }
+  .frame.inked time::before { background: var(--ink); border-color: var(--ink); }
+  .frame.inked time::after { border-top: 2px solid var(--ink); }
+  .art { position: relative; margin-top: 12px; height: 184px; border: 1px dashed var(--line); border-radius: 8px; background: var(--ground); overflow: hidden; display: flex; flex-direction: column; justify-content: center; padding: 14px; }
+  .frame.inked .art { border: 1.5px solid var(--ink); background: var(--panel); }
+  .frame > p { margin: 12px 0 0; font-size: 17px; font-weight: 700; line-height: 1.3; }
+  .art-photo { padding: 0; }
+  .art-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .art-match { gap: 12px; }
+  .art-match .m { display: flex; flex-direction: column; gap: 2px; }
+  .art-match .raw { font-size: 14px; color: var(--pencil); font-style: italic; }
+  .art-match .sku { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 650; color: var(--ink); }
+  .arr { width: 16px; height: 16px; color: var(--teal); flex: none; }
+  .slots { display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px; }
+  .slots i { aspect-ratio: 1; border-radius: 3px; background: var(--teal); }
+  .slots i.short { background: transparent; border: 2px solid var(--red); }
+  .art-stock .cap { margin-top: 14px; font-size: 15px; color: var(--ink-2); }
+  .art-stock .cap b { color: var(--ink); }
+  .art-stock .cap b.short { color: var(--red-dark); }
+  .art-chat { padding: 0; }
+  .art-chat .wa-chat { height: 100%; justify-content: center; padding: 10px 14px; }
+  .art-chat .wa-msg { font-size: 14px; }
+  .gate { position: relative; display: flex; justify-content: center; align-items: center; }
+  .gate::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; margin-left: -1.5px; background: var(--ink); }
+  .gate span { position: relative; writing-mode: vertical-rl; transform: rotate(180deg); background: var(--hl); color: var(--ink); font-weight: 700; font-size: 14px; padding: 12px 6px; border-radius: 4px; white-space: nowrap; }
+  .art-entry { padding: 12px; }
+  .mini-vch { border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  .mv-bar { background: var(--teal); color: #fff; font-size: 13px; font-weight: 600; padding: 6px 10px; }
+  .mini-vch i { display: block; height: 7px; margin: 10px; background: var(--ink); border-radius: 2px; }
+  .mini-vch i:nth-of-type(1) { width: 78%; } .mini-vch i:nth-of-type(2) { width: 56%; } .mini-vch i:nth-of-type(3) { width: 68%; } .mini-vch i:nth-of-type(4) { width: 44%; }
+  .mv-total { margin: 0 10px; padding: 6px 0 8px; border-top: 3px double var(--ink); text-align: right; font-size: 14px; font-weight: 700; }
+  .stamp { position: absolute; right: 18px; top: 46px; transform: rotate(-6deg); background: var(--hl); color: var(--ink); font: 700 13px/1 var(--mono); padding: 6px 8px; border-radius: 3px; }
+  @media (max-width: 1040px) {
+    .film { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 24px; gap: 14px; margin: 0 -24px; padding: 0 24px 14px; scrollbar-width: thin; }
+    .frame { flex: 0 0 min(72%, 300px); scroll-snap-align: start; }
+    .frame time { margin-right: -14px; }
+    .gate { flex: 0 0 40px; }
+  }
+  @media (max-width: 560px) { .film { margin: 0 -16px; padding: 0 16px 14px; scroll-padding-inline: 16px; } }
 
-  /* alias memory */
-  .memory { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; max-width: 980px; }
-  .memory .bar { font-size: 15px; }
-  .memory table { font-size: 16px; }
-  .memory th, .memory td { padding: 14px 16px; }
-  .memory td { border-bottom: 1px solid var(--line-2); }
-  .memory tr:last-child td { border-bottom: 0; }
-  .memory .wrote { font-family: var(--hand); font-size: 20px; color: #1d2f6f; }
-  .memory .by { color: var(--pencil); font-size: 15px; }
-  @media (max-width: 720px) {
-    .memory thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-    .memory tr { display: grid; gap: 2px; padding: 14px 16px; border-bottom: 1px solid var(--line-2); }
-    .memory tr:last-child { border-bottom: 0; }
-    .memory td { padding: 0; border: 0; }
-    .memory td.reads::before { content: "reads as → "; color: var(--pencil); font-size: 14px; }
+  /* learns: what they wrote -> what Munshi reads */
+  .alias { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; max-width: 900px; }
+  .al { display: grid; grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr); align-items: center; gap: 12px; padding: 18px 24px; border-bottom: 1px solid var(--line-2); }
+  .al .said { font-size: clamp(1.1rem, 2vw, 1.35rem); color: var(--pencil); font-style: italic; }
+  .al .arr { width: 28px; height: 28px; }
+  .al .pill { justify-self: start; background: var(--teal-tint); color: var(--teal-ink); font-weight: 650; padding: 8px 12px; border-radius: 6px; }
+  .al-note { margin: 0; padding: 12px 24px; font-size: 15px; color: var(--pencil); background: var(--ground); }
+  @media (max-width: 640px) {
+    .al { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 16px; }
+    .al .arr { transform: rotate(90deg); width: 22px; height: 22px; }
+    .al-note { padding: 12px 16px; }
   }
 
   /* what happens next + facts */
   .next { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 56px; align-items: start; }
   @media (max-width: 900px) { .next { grid-template-columns: minmax(0, 1fr); gap: 40px; } }
-  .steps { list-style: none; margin: 0; padding: 0; counter-reset: s; }
-  .steps li { counter-increment: s; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 16px; padding: 18px 0; border-top: 1px solid var(--line); }
-  .steps li::before { content: counter(s); font: 600 18px/44px var(--mono); text-align: center; width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--teal); color: var(--teal); }
+  .steps { list-style: none; margin: 0; padding: 0; }
+  .steps li { padding: 18px 0; border-top: 1px solid var(--line); }
   .steps h3 { margin: 0 0 4px; font-size: 1.2rem; line-height: 1.3; font-weight: 700; }
   .steps p { margin: 0; color: var(--ink-2); font-size: 17px; }
-  .facts { margin: 0; background: var(--ground); border: 1px solid var(--line); border-radius: 10px; padding: 8px 20px; }
+  .pilot { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .facts { margin: 0; padding: 4px 20px; }
   .facts div { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
   .facts div:last-child { border-bottom: 0; }
   .facts dt { font-weight: 700; }
@@ -302,6 +348,9 @@
   <symbol id="i-flag" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M12 3 2.5 20h19Z M12 10v4.5 M12 17.3v.2"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10" width="15" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="2.2"/><path fill="none" stroke="currentColor" stroke-width="2.2" d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
   <symbol id="i-ask" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" d="M4 5h16v11H9l-5 4Z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M4 12h15M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-ticks" viewBox="0 0 16 11"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M1 6l3 3 6-7M6 8l1 1 6-7"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M19 12H5M11 6l-6 6 6 6"/></symbol>
   <symbol id="i-replay" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5"/></symbol>
 </svg>
 
@@ -313,7 +362,6 @@
     </a>
     <nav aria-label="Main">
       <a class="navlink" href="#how">How it works</a>
-      <a class="navlink" href="#next">What happens next</a>
       <!-- TODO: replace 91XXXXXXXXXX with the real WhatsApp number (4 places on this page) -->
       <a class="btn btn-act btn-sm" href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20try%20Munshi%20on%20our%20orders." target="_blank" rel="noopener" aria-label="Chat with Munshi on WhatsApp"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>Chat on WhatsApp</span></a>
     </nav>
@@ -330,48 +378,39 @@
           <span class="l1">Stop retyping every order into Tally.</span>
           <span class="l2 deva" lang="hi">हर ऑर्डर दोबारा टाइप करना बंद।</span>
         </h1>
-        <p class="lede">For FMCG, pharma, electrical and hardware distributors. Munshi reads the orders your customers send on <b>WhatsApp, email, phone calls and handwritten parchis</b>, matches them to your item list and price list, and prepares the TallyPrime entry. <b>Your staff checks it and presses Approve.</b></p>
+        <p class="lede">Munshi reads your customers' orders from WhatsApp, calls, email and <b>handwritten parchis</b>, and prepares the TallyPrime entry. Your staff checks it and presses Approve.</p>
         <div class="cta" id="hero-cta">
           <a class="btn btn-act" href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20start%20a%202-week%20Munshi%20pilot." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Start a 2-week pilot on WhatsApp</a>
           <!-- TODO: real phone number -->
           <a class="call" href="tel:+91XXXXXXXXXX"><svg aria-hidden="true"><use href="#i-phone"/></svg>or call +91 XXXXX XXXXX</a>
         </div>
-        <!-- TODO: add the pilot price here once decided -->
-        <p class="cta-note">Two weeks on your real orders. At the end we show you the hours saved and how accurate the entries were.</p>
-        <ul class="facts-mini">
-          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Your customers keep ordering exactly as they do today</li>
-          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Works with TallyPrime. Nothing new to install for your staff to learn</li>
-        </ul>
       </div>
 
       <div>
         <div class="screen" id="demo" aria-label="Example: an order becoming a TallyPrime sales order">
-          <div class="bar"><b>Sales Order · Sharma Hardware</b><span class="mode" id="mode">DRAFT</span></div>
+          <div class="bar"><b>Sales Order Creation</b><span class="mode" id="mode">DRAFT</span></div>
           <div class="screen-body">
             <div class="screen-main">
               <div class="tabs" role="tablist" aria-label="How the order arrived">
-                <button class="tab" role="tab" id="t-wa" aria-controls="p-wa" aria-selected="true"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp</span></button>
-                <button class="tab" role="tab" id="t-slip" aria-controls="p-slip" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-cam"/></svg><span>Parchi<span class="long"> photo</span></span></button>
+                <button class="tab" role="tab" id="t-slip" aria-controls="p-slip" aria-selected="true"><svg aria-hidden="true"><use href="#i-cam"/></svg><span>Parchi<span class="long"> photo</span></span></button>
+                <button class="tab" role="tab" id="t-wa" aria-controls="p-wa" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp</span></button>
                 <button class="tab" role="tab" id="t-call" aria-controls="p-call" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-phone"/></svg><span>Phone call</span></button>
               </div>
-              <div class="panel" role="tabpanel" id="p-wa" aria-labelledby="t-wa">
-                <div class="src-meta"><span>Sharma Hardware, Jayanagar</span><span>9:42 AM</span></div>
-                <div class="wa">Namaste bhai, aaj ka order
-blue pipe 2 inch - 10
-elbow 1 inch 5 box
-ball valve 3/4 - 24
-teflon tape 2 dozen
-rate same as last time pls</div>
+              <div class="panel" role="tabpanel" id="p-slip" aria-labelledby="t-slip">
+                <div class="src-meta"><span>Photo from the salesman · 9:42 AM</span></div>
+                <figure class="photo">
+                  <img src="assets/parchi-sample.jpg" width="820" height="473" alt="Photo of a handwritten order slip in Hindi and English: Sharma Hardware, 27/9. Blue pipe 2 inch, 10. Elbow 1 inch, 5 box. Ball valve three-quarter inch, 24. Teflon, 2 dozen. Rate same as last time.">
+                  <figcaption>Sample</figcaption>
+                </figure>
               </div>
-              <div class="panel" role="tabpanel" id="p-slip" aria-labelledby="t-slip" hidden>
-                <div class="src-meta"><span>Photo sent by the salesman</span><span>9:42 AM</span></div>
-                <div class="slip" lang="hi-Latn">
-                  <p>Sharma Hardware · 27/9</p>
-                  <p lang="hi">ब्लू पाइप 2" — 10</p>
-                  <p>elbow 1" — 5 box</p>
-                  <p>ball valve ¾ — 24</p>
-                  <p lang="hi">टेफ्लॉन — 2 दर्जन</p>
-                  <p>rate <span lang="hi">पिछली बार वाला</span></p>
+              <div class="panel" role="tabpanel" id="p-wa" aria-labelledby="t-wa" hidden>
+                <div class="wa-app">
+                  <div class="wa-top"><svg aria-hidden="true"><use href="#i-back"/></svg><span class="wa-av" aria-hidden="true">SH</span><div><b>Sharma Hardware</b><small>Jayanagar</small></div></div>
+                  <div class="wa-chat">
+                    <span class="wa-day">Today</span>
+                    <div class="wa-msg tail"><p>Namaste bhai, aaj ka order</p><span class="wa-time">9:42 am</span></div>
+                    <div class="wa-msg"><p>blue pipe 2 inch - 10<br>elbow 1 inch 5 box<br>ball valve 3/4 - 24<br>teflon tape 2 dozen<br>rate same as last time pls</p><span class="wa-time">9:42 am</span></div>
+                  </div>
                 </div>
               </div>
               <div class="panel" role="tabpanel" id="p-call" aria-labelledby="t-call" hidden>
@@ -380,45 +419,33 @@ rate same as last time pls</div>
               </div>
 
               <div class="vch is-draft" id="vch">
-                <dl class="vch-head">
-                  <dt>Party</dt><dd>Sharma Hardware, Jayanagar</dd>
-                  <dt>Rates</dt><dd>As last invoice (12 Sep)</dd>
-                </dl>
+                <div class="vch-meta">
+                  <div><span>Party A/c name</span><b>Sharma Hardware, Jayanagar</b></div>
+                  <div><span>Order no.</span><b class="num">SO-1482</b></div>
+                  <div><span>Date</span><b class="num">27-Sep-26</b></div>
+                </div>
                 <table>
-                  <caption>Items Munshi matched from the order</caption>
-                  <thead><tr><th scope="col">Item</th><th scope="col" class="r">Qty</th><th scope="col" class="r rate">Rate</th><th scope="col" class="r">Amount</th></tr></thead>
+                  <thead><tr><th scope="col">Name of Item</th><th scope="col" class="r">Qty</th><th scope="col" class="r rate">Rate</th><th scope="col" class="r">Amount</th></tr></thead>
                   <tbody>
-                    <tr>
-                      <td><span class="item">PVC Pipe 2" Blue, Class 3</span><span class="st st-learned"><svg aria-hidden="true"><use href="#i-learn"/></svg>Learned: “blue pipe 2 inch”</span></td>
-                      <td class="r num">10 nos</td><td class="r num rate">486.00</td><td class="r num">4,860.00</td>
-                    </tr>
-                    <tr>
-                      <td><span class="item">Elbow 1" PVC (box of 25)</span><span class="st st-matched"><svg aria-hidden="true"><use href="#i-check"/></svg>Matched</span></td>
-                      <td class="r num">5 box</td><td class="r num rate">310.00</td><td class="r num">1,550.00</td>
-                    </tr>
-                    <tr id="row-flag">
-                      <td><span class="item">Ball Valve 3/4" Brass</span><span class="st st-flag" id="flag-chip"><svg aria-hidden="true"><use href="#i-flag"/></svg><span id="flag-text">24 asked, 18 in stock</span></span></td>
-                      <td class="r num">18 nos</td><td class="r num rate">265.00</td><td class="r num">4,770.00</td>
-                    </tr>
-                    <tr>
-                      <td><span class="item">Teflon Tape 1/2"</span><span class="st st-learned"><svg aria-hidden="true"><use href="#i-learn"/></svg>Learned: “2 dozen” = 24</span></td>
-                      <td class="r num">24 nos</td><td class="r num rate">12.00</td><td class="r num">288.00</td>
-                    </tr>
+                    <tr><td>PVC Pipe 2" Blue, Class 3</td><td class="r num">10 nos</td><td class="r num rate">486.00</td><td class="r num">4,860.00</td></tr>
+                    <tr><td>Elbow 1" PVC</td><td class="r num">5 box</td><td class="r num rate">310.00</td><td class="r num">1,550.00</td></tr>
+                    <tr id="row-flag"><td>Ball Valve 3/4" Brass<span class="note" id="flag-note">Only 18 in stock, 24 asked</span></td><td class="r num">18 nos</td><td class="r num rate">265.00</td><td class="r num">4,770.00</td></tr>
+                    <tr><td>Teflon Tape 1/2"</td><td class="r num">24 nos</td><td class="r num rate">12.00</td><td class="r num">288.00</td></tr>
                   </tbody>
                   <tfoot><tr><td>Total</td><td></td><td class="rate"></td><td class="r num">₹11,468.00</td></tr></tfoot>
                 </table>
+                <p class="vch-narr"><b>Narration:</b>Rates as per last invoice, 12 Sep</p>
               </div>
             </div>
 
             <div class="rail" aria-label="Actions">
-              <button class="key key-act" id="k-approve" type="button"><kbd>A</kbd>Approve</button>
-              <button class="key" id="k-ask" type="button"><kbd>C</kbd>Ask customer</button>
-              <button class="key" id="k-replay" type="button"><kbd>R</kbd>Replay</button>
+              <button class="key key-act" id="k-approve" type="button" aria-keyshortcuts="Control+A"><kbd>Ctrl A</kbd>Approve</button>
+              <button class="key" id="k-ask" type="button" aria-keyshortcuts="C"><kbd>C</kbd>Ask customer</button>
             </div>
           </div>
-          <div class="status" aria-live="polite"><span class="s-main" id="s-main">Draft · 1 line needs a person</span><span id="s-side">Nothing enters Tally until you approve</span></div>
+          <div class="status" aria-live="polite"><span class="s-main" id="s-main">Draft · 1 line needs a person</span><span class="confirm" id="confirm" hidden><b>Accept?</b><button class="yes" id="c-yes" type="button"><kbd>Y</kbd>Yes</button><button id="c-no" type="button"><kbd>N</kbd>No</button></span><button class="linkbtn" id="k-replay" type="button" hidden>Replay</button></div>
         </div>
-        <p class="sample">Sample order for illustration. Try the Approve and Ask customer keys.</p>
+        <p class="sample">Sample order. Try Ask customer, then Approve.</p>
       </div>
     </div>
   </section>
@@ -427,15 +454,55 @@ rate same as last time pls</div>
   <section class="band white" id="how" aria-labelledby="h-how">
     <div class="wrap">
       <h2 id="h-how">One order, one morning.</h2>
-      <p class="intro">Here is Sharma Hardware's order from the example above, from the moment it arrives to the moment it's in Tally. Everything above the black line is still a draft.</p>
+      <p class="intro">Everything before the yellow line is still a draft.</p>
 
-      <ol class="day">
-        <li class="draft"><time class="num">9:42</time><div><h3>The order arrives on WhatsApp</h3><p>It could just as well be an email, a phone call, or a photo of a handwritten parchi. Your customer changes nothing.</p></div></li>
-        <li class="draft"><time class="num">9:42</time><div><h3>Munshi reads it and matches every item</h3><p>“blue pipe 2 inch” becomes PVC Pipe 2" Blue, Class 3, because that's what Sharma Hardware always means. Rates come from their last invoice, as they asked.</p></div></li>
-        <li class="draft"><time class="num">9:43</time><div><h3>Stock is checked, one line is flagged</h3><p>They asked for 24 ball valves and 18 are in stock. Munshi doesn't guess. It flags the line for your staff.</p></div></li>
-        <li class="draft"><time class="num">9:44</time><div><h3>Munshi asks the customer, if you want it to</h3><p>“We have 18 ball valves ready. Send 18 now and 6 next week?”</p><span class="reply"><small>Sharma Hardware · 9:47</small>Haan, theek hai 👍</span></div></li>
-        <li class="line"><div><span><svg aria-hidden="true"><use href="#i-lock"/></svg>Priya checks the draft and presses Approve · 9:51</span></div></li>
-        <li class="inked"><time class="num">9:51</time><div><h3>The sales order is entered in TallyPrime</h3><p>Correct items, correct rates, no typing mistakes. Nobody retyped anything.</p></div></li>
+      <ol class="film" tabindex="0" aria-label="How one order moves through Munshi">
+        <li class="frame">
+          <time class="num">9:42</time>
+          <div class="art art-photo" aria-hidden="true"><img src="assets/parchi-sample.jpg" width="820" height="473" alt="" loading="lazy"></div>
+          <p>Parchi arrives</p>
+          <span class="sr-only">The salesman sends a photo of the handwritten order slip.</span>
+        </li>
+        <li class="frame">
+          <time class="num">9:42</time>
+          <div class="art art-match" aria-hidden="true">
+            <div class="m"><span class="raw" lang="hi">ब्लू पाइप 2"</span><span class="sku"><svg class="arr"><use href="#i-arrow"/></svg>PVC Pipe 2" Blue</span></div>
+            <div class="m"><span class="raw">elbow 1"</span><span class="sku"><svg class="arr"><use href="#i-arrow"/></svg>Elbow 1" PVC</span></div>
+            <div class="m"><span class="raw" lang="hi">टेफ्लॉन</span><span class="sku"><svg class="arr"><use href="#i-arrow"/></svg>Teflon Tape 1/2"</span></div>
+          </div>
+          <p>Items matched</p>
+          <span class="sr-only">Munshi matches each handwritten item to your item list, at the rates from the last invoice.</span>
+        </li>
+        <li class="frame">
+          <time class="num">9:43</time>
+          <div class="art art-stock" aria-hidden="true">
+            <div class="slots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="short"></i><i class="short"></i><i class="short"></i><i class="short"></i><i class="short"></i><i class="short"></i></div>
+            <span class="cap"><b>18</b> in stock · <b class="short">6</b> short</span>
+          </div>
+          <p>Short line flagged</p>
+          <span class="sr-only">24 ball valves were asked for and 18 are in stock, so the line is flagged for a person.</span>
+        </li>
+        <li class="frame">
+          <time class="num">9:44</time>
+          <div class="art art-chat" aria-hidden="true">
+            <div class="wa-chat">
+              <div class="wa-msg wa-out tail"><p>18 now, 6 next week?</p><span class="wa-time">9:44<svg><use href="#i-ticks"/></svg></span></div>
+              <div class="wa-msg tail"><p>Haan, theek hai 👍</p><span class="wa-time">9:47</span></div>
+            </div>
+          </div>
+          <p>Customer says yes</p>
+          <span class="sr-only">Munshi asks the customer on WhatsApp, and they agree to 18 now and 6 next week.</span>
+        </li>
+        <li class="gate"><span>Priya approves · 9:51</span></li>
+        <li class="frame inked">
+          <time class="num">9:51</time>
+          <div class="art art-entry" aria-hidden="true">
+            <div class="mini-vch"><div class="mv-bar">Sales Order · SO-1482</div><i></i><i></i><i></i><i></i><div class="mv-total">₹11,468.00</div></div>
+            <span class="stamp">ENTERED</span>
+          </div>
+          <p>In TallyPrime</p>
+          <span class="sr-only">The approved order is entered in TallyPrime. Nobody retyped anything.</span>
+        </li>
       </ol>
     </div>
   </section>
@@ -444,17 +511,13 @@ rate same as last time pls</div>
   <section class="band" aria-labelledby="h-learn">
     <div class="wrap">
       <h2 id="h-learn">It learns how each shop writes. <span class="deva" lang="hi">हर दुकान की अपनी भाषा।</span></h2>
-      <p class="intro">When your staff corrects a line once, Munshi remembers it for that customer. The same mistake doesn't come back next week.</p>
-      <div class="memory">
-        <div class="bar"><b>Customer's words · Sharma Hardware</b><span class="mode">SAMPLE</span></div>
-        <table>
-          <thead><tr><th scope="col">They wrote</th><th scope="col">Munshi now reads it as</th><th scope="col">Learned from</th></tr></thead>
-          <tbody>
-            <tr><td class="wrote">blue pipe 2 inch</td><td class="reads"><b>PVC Pipe 2" Blue, Class 3</b></td><td class="by">Priya's correction, 3 Sep</td></tr>
-            <tr><td class="wrote">teflon 2 dozen</td><td class="reads"><b>Teflon Tape 1/2" · 24 nos</b></td><td class="by">Priya's correction, 5 Sep</td></tr>
-            <tr><td class="wrote" lang="hi-Latn">elbow ek inch dabba</td><td class="reads"><b>Elbow 1" PVC (box of 25)</b></td><td class="by">Ramesh's correction, 9 Sep</td></tr>
-          </tbody>
-        </table>
+      <p class="intro">Correct a line once and Munshi remembers it for that customer.</p>
+      <div class="alias">
+        <div class="bar"><b>Sharma Hardware writes…</b><span class="mode">SAMPLE</span></div>
+        <div class="al"><span class="said">“blue pipe 2 inch”</span><svg class="arr" aria-hidden="true"><use href="#i-arrow"/></svg><span class="pill">PVC Pipe 2" Blue, Class 3</span></div>
+        <div class="al"><span class="said">“teflon 2 dozen”</span><svg class="arr" aria-hidden="true"><use href="#i-arrow"/></svg><span class="pill">Teflon Tape 1/2" · 24 nos</span></div>
+        <div class="al"><span class="said" lang="hi-Latn">“elbow ek inch dabba”</span><svg class="arr" aria-hidden="true"><use href="#i-arrow"/></svg><span class="pill">Elbow 1" PVC, box of 25</span></div>
+        <p class="al-note">Each one corrected once by your staff, then remembered for this customer.</p>
       </div>
     </div>
   </section>
@@ -463,21 +526,17 @@ rate same as last time pls</div>
   <section class="band white" id="next" aria-labelledby="h-next">
     <div class="wrap">
       <h2 id="h-next">What happens when you message us</h2>
-      <p class="intro">No sales pitch and no long setup. Here is exactly what the pilot looks like.</p>
-      <div class="next">
+            <div class="next">
         <ol class="steps">
-          <li><div><h3>You send us a WhatsApp message</h3><p>One of the founders replies personally. <!-- TODO: add founder name and reply time --></p></div></li>
-          <li><div><h3>A short call about how orders reach you</h3><p>Which channels, how many orders a day, and who enters them in Tally today.</p></div></li>
-          <li><div><h3>We connect Munshi to your TallyPrime</h3><p>We load your item list and customer price lists. Your customers and your staff don't have to change anything.</p></div></li>
-          <li><div><h3>Two weeks on your real orders</h3><p>Your staff approves every entry. At the end we show you the hours saved and how accurate the entries were, and you decide.</p></div></li>
+          <li><div><h3>Send us a WhatsApp message</h3><p>[Founder name], one of the founders, replies personally. <!-- TODO: founder name and typical reply time --></p></div></li>
+          <li><div><h3>We connect Munshi to your TallyPrime</h3><p>We load your item list and customer price lists.</p></div></li>
+          <li><div><h3>Two weeks on your real orders</h3><p>Approving every entry. Then we show you the hours saved and the accuracy.</p></div></li>
         </ol>
-        <dl class="facts">
+        <div class="pilot"><div class="bar"><b>Pilot details</b></div><dl class="facts">
           <div><dt>Works with</dt><dd>TallyPrime</dd></div>
           <div><dt>Your data</dt><dd>Stored on servers in India</dd></div>
-          <div><dt>Your customers</dt><dd>Keep ordering on WhatsApp, calls and parchis, as they do now</dd></div>
-          <div><dt>Every entry</dt><dd>Checked and approved by your staff before it goes into Tally</dd></div>
-          <div><dt>Pilot cost</dt><dd>Agreed with you before we start <!-- TODO: state the pilot price once decided --></dd></div>
-        </dl>
+          <div><dt>Pilot cost</dt><dd>Agreed before we start <!-- TODO: state the pilot price once decided --></dd></div>
+        </dl></div>
       </div>
     </div>
   </section>
@@ -486,8 +545,8 @@ rate same as last time pls</div>
   <section class="close" id="close" aria-labelledby="h-close">
     <div class="wrap">
       <div>
-        <h2 id="h-close">Order aaya, entry tayyar.</h2>
-        <p>Try Munshi on two weeks of your own orders. Your staff checks, Munshi types.</p>
+        <h2 id="h-close">Order aaya, entry tayyar. <span class="deva" lang="hi">ऑर्डर आया, एंट्री तैयार।</span></h2>
+        <p>Your staff checks. Munshi types.</p>
       </div>
       <div class="cta">
         <a class="btn btn-act" href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20start%20a%202-week%20Munshi%20pilot." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Start a 2-week pilot on WhatsApp</a>
@@ -500,8 +559,8 @@ rate same as last time pls</div>
 <footer>
   <div class="wrap">
     <!-- TODO: company legal name, email -->
-    <p><b>Munshi</b> by [Company name] · Made in Bengaluru</p>
-    <p><a href="mailto:hello@example.com">hello@example.com</a> · <a href="tel:+91XXXXXXXXXX">+91 XXXXX XXXXX</a></p>
+    <p><b>Munshi</b> by [Company name] · Founder: [Founder name] · Made in Bengaluru</p>
+    <p><span>[email address]</span> · <a href="tel:+91XXXXXXXXXX">+91 XXXXX XXXXX</a></p>
     <p>Order data is stored on servers in India.</p>
   </div>
 </footer>
@@ -514,8 +573,17 @@ rate same as last time pls</div>
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (id) => document.getElementById(id);
+  const vch = $('vch'), mode = $('mode'), sMain = $('s-main'), kReplay = $('k-replay');
+  const confirmBox = $('confirm'), kApprove = $('k-approve'), kAsk = $('k-ask');
+  const rows = [...vch.querySelectorAll('tbody tr')];
+  const flagRow = $('row-flag');
+  const STEP = 420;
+  let flagOpen = true, state = 'draft', timers = [];
+  const later = (fn, ms) => timers.push(setTimeout(fn, reduce ? 0 : ms));
+  const clear = () => { timers.forEach(clearTimeout); timers = []; };
+  const bar = (row) => rows.forEach((r) => r.classList.toggle('is-active', r === row));
 
-  /* ---- input tabs (WAI-ARIA tabs pattern) ---- */
+  /* input tabs (WAI-ARIA tabs pattern) */
   const tabs = [...document.querySelectorAll('[role="tab"]')];
   const select = (tab) => {
     tabs.forEach((t) => {
@@ -524,7 +592,7 @@ rate same as last time pls</div>
       t.tabIndex = on ? 0 : -1;
       $(t.getAttribute('aria-controls')).hidden = !on;
     });
-    scan();
+    if (state === 'draft') scan();
   };
   tabs.forEach((t, i) => {
     t.addEventListener('click', () => select(t));
@@ -537,98 +605,108 @@ rate same as last time pls</div>
     });
   });
 
-  /* ---- the yellow bar walks down the lines, then rests where a person is needed ---- */
-  const rows = [...document.querySelectorAll('#vch tbody tr')];
-  const flagRow = $('row-flag');
-  let timers = [];
+  /* the yellow bar reads down the lines, then rests where a person is needed */
   function scan() {
-    timers.forEach(clearTimeout); timers = [];
-    rows.forEach((r) => r.classList.remove('is-active'));
-    const rest = vch.classList.contains('is-inked') ? null : (flagOpen ? flagRow : null);
-    if (reduce) { if (rest) rest.classList.add('is-active'); return; }
-    rows.forEach((r, i) => {
-      timers.push(setTimeout(() => {
-        rows.forEach((x) => x.classList.remove('is-active'));
-        r.classList.add('is-active');
-      }, 250 + i * 420));
-    });
-    timers.push(setTimeout(() => {
-      rows.forEach((x) => x.classList.remove('is-active'));
-      if (rest) rest.classList.add('is-active');
-    }, 250 + rows.length * 420));
+    clear(); bar(null);
+    rows.forEach((r, i) => later(() => bar(r), 250 + i * STEP));
+    later(() => bar(null), 250 + rows.length * STEP);
   }
 
-  /* ---- draft → ask → approve ---- */
-  const vch = $('vch'), mode = $('mode'), sMain = $('s-main'), sSide = $('s-side');
-  const kApprove = $('k-approve'), kAsk = $('k-ask');
-  let flagOpen = true;
+  function status(main) {
+    sMain.textContent = main;
+    sMain.hidden = false; confirmBox.hidden = true;
+  }
 
   function ask() {
-    if (!flagOpen || vch.classList.contains('is-inked')) return;
+    if (!flagOpen || state !== 'draft') return;
     kAsk.disabled = true;
-    sMain.textContent = 'Asked on WhatsApp · “18 now, 6 next week?”';
-    sSide.textContent = 'Waiting for reply…';
-    setTimeout(() => {
+    kReplay.hidden = false;
+    status('Asked on WhatsApp: “18 now, 6 next week?”');
+    later(() => {
       flagOpen = false;
-      const chip = $('flag-chip');
-      chip.className = 'st st-matched';
-      chip.querySelector('use').setAttribute('href', '#i-check');
-      $('flag-text').textContent = 'Customer agreed: 18 now, 6 next week';
-      flagRow.classList.remove('is-active');
-      sMain.textContent = 'Draft · all lines ready';
-      sSide.textContent = 'Reply 9:47: “Haan, theek hai”';
-    }, reduce ? 0 : 1100);
+      const note = $('flag-note');
+      note.className = 'note ok';
+      note.textContent = 'Customer agreed: 18 now, 6 next week';
+      status('Draft · ready to approve');
+    }, 1100);
   }
 
+  /* Ctrl+A asks "Accept?", as the accounting screen does */
   function approve() {
-    if (vch.classList.contains('is-inked')) return;
-    timers.forEach(clearTimeout);
-    rows.forEach((r) => r.classList.remove('is-active'));
-    vch.classList.replace('is-draft', 'is-inked');
-    mode.textContent = 'ENTERED';
-    mode.style.background = 'var(--hl)'; mode.style.color = 'var(--ink)';
+    if (state !== 'draft') return;
+    state = 'confirm';
+    sMain.hidden = true; kReplay.hidden = true; confirmBox.hidden = false;
+    $('c-yes').focus();
+  }
+  function cancel() {
+    if (state !== 'confirm') return;
+    state = 'draft';
+    status(flagOpen ? 'Draft · 1 line needs a person' : 'Draft · ready to approve');
+    kReplay.hidden = flagOpen;
+    kApprove.focus();
+  }
+  function accept() {
+    if (state !== 'confirm') return;
+    state = 'inking'; clear();
     kApprove.disabled = true; kAsk.disabled = true;
-    sMain.innerHTML = '';
-    sMain.append('Entered in TallyPrime · Vch No. 1482');
-    sSide.textContent = flagOpen ? 'Approved with 18 ball valves' : 'Approved by Priya · 9:51';
+    status('Entering…');
+    rows.forEach((r, i) => later(() => { bar(r); r.classList.add('ink'); }, i * 260));
+    later(() => {
+      bar(null);
+      vch.classList.replace('is-draft', 'is-inked');
+      mode.textContent = 'ENTERED · VCH 1482';
+      mode.style.background = 'var(--hl)'; mode.style.color = 'var(--ink)';
+      sMain.textContent = 'Entered in TallyPrime · Vch No. 1482';
+      kReplay.hidden = false;
+      state = 'inked';
+      kReplay.focus();
+    }, rows.length * 260 + 120);
   }
 
   function replay() {
-    flagOpen = true;
+    clear();
+    flagOpen = true; state = 'draft';
+    rows.forEach((r) => r.classList.remove('ink'));
     vch.classList.replace('is-inked', 'is-draft');
     mode.textContent = 'DRAFT'; mode.style.background = ''; mode.style.color = '';
     kApprove.disabled = false; kAsk.disabled = false;
-    const chip = $('flag-chip');
-    chip.className = 'st st-flag';
-    chip.querySelector('use').setAttribute('href', '#i-flag');
-    $('flag-text').textContent = '24 asked, 18 in stock';
-    sMain.textContent = 'Draft · 1 line needs a person';
-    sSide.textContent = 'Nothing enters Tally until you approve';
+    const note = $('flag-note');
+    note.className = 'note';
+    note.textContent = 'Only 18 in stock, 24 asked';
+    kReplay.hidden = true;
+    status('Draft · 1 line needs a person');
     scan();
   }
 
   kApprove.addEventListener('click', approve);
   kAsk.addEventListener('click', ask);
   $('k-replay').addEventListener('click', replay);
+  $('c-yes').addEventListener('click', accept);
+  $('c-no').addEventListener('click', cancel);
   $('demo').addEventListener('keydown', (e) => {
-    if (e.target.closest('[role="tab"]') && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) return;
     const k = e.key.toLowerCase();
-    if (k === 'a') approve(); else if (k === 'c') ask(); else if (k === 'r') replay();
+    if ((e.ctrlKey || e.metaKey) && k === 'a') { e.preventDefault(); approve(); return; }
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (state === 'confirm') {
+      if (k === 'y' || k === 'enter') { e.preventDefault(); accept(); }
+      else if (k === 'n' || k === 'escape') { e.preventDefault(); cancel(); }
+      return;
+    }
+    if (k === 'c') ask(); else if (k === 'r') replay();
   });
 
-  /* start the scan when the screen is on screen */
+  /* start reading when the screen is in view */
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { scan(); io.disconnect(); } }, { threshold: .4 });
     io.observe($('demo'));
   } else { scan(); }
 
-  /* ---- mobile dock: show once the hero CTA is gone, hide at the closing CTA ---- */
+  /* mobile dock: show once the hero CTA is gone, hide at the closing CTA */
   const dock = $('dock');
   if ('IntersectionObserver' in window) {
-    const seen = new Map();
+    const seen = new Map([['hero-cta', true]]);
     const upd = () => dock.classList.toggle('on', !seen.get('hero-cta') && !seen.get('close'));
     const io2 = new IntersectionObserver((es) => { es.forEach((e) => seen.set(e.target.id, e.isIntersecting)); upd(); });
-    seen.set('hero-cta', true);
     io2.observe($('hero-cta')); io2.observe($('close'));
   }
 })();

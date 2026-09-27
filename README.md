@@ -11,7 +11,8 @@ Search `index.html` for `TODO` and replace the placeholders:
 - WhatsApp number `91XXXXXXXXXX` (4 links) and phone `+91XXXXXXXXXX`
 - Company name, email, founder name and reply time
 - Pilot price
-- The `og:image` URL: make it absolute once the site has a domain
+- `https://munshi.example` in the `og:url` and `og:image` tags: set the real domain
+- `assets/parchi-sample.jpg` is a staged stand-in rendered from a handwriting font. Replace it with a real photo of a handwritten order slip (with the customer's permission, names changed) before launch
 
 Have a native speaker review the Hindi (Devanagari) and Hinglish lines. All order data on the page is a labelled sample.
 
@@ -19,5 +20,7 @@ Have a native speaker review the Hindi (Devanagari) and Hinglish lines. All orde
 
 - `index.html`: the page
 - `og-image.png`: link-preview image for WhatsApp and social shares
+- `assets/`: images used on the page
 - `PRODUCT.md`: product facts used for design decisions
+- `DESIGN.md`: the design system (tokens, rules, components)
 - `.impeccable/`: design critique and direction notes from the Impeccable skill

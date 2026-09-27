@@ -1,0 +1,1 @@
+Origin: staged synthetic sample, not a real customer document. Rendered from .impeccable/work/slip.html (Kalam font, ruled paper, Hindi and English order text) in headless Edge at 2x, then composited in Python/PIL with a perspective warp, drop shadow, lighting gradient and grain on a flat counter texture. No AI image generation.

@@ -34,7 +34,8 @@ Munshi works inside the distributor's existing habits. Customers keep ordering o
 - Tally: works with TallyPrime only (confirmed).
 - Data: processed and stored on cloud servers in India (confirmed).
 - Pilot: short pilots, usually two weeks, with a few distributors, measuring hours saved and entry accuracy. Pilot price is undecided; do not state "free" or a price.
-- Undecided / placeholder: WhatsApp contact number, phone number, email, company legal name, city, founder name.
+- Team: a small team based in Bengaluru (from the brief).
+- Undecided / placeholder: WhatsApp contact number, phone number, email, company legal name, founder name.
 
 ## Brand Commitments
 

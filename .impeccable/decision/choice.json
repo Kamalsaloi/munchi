@@ -1,0 +1,10 @@
+{
+  "seed": "600dd588",
+  "scope": "direction",
+  "mode": "persuade",
+  "chosen": "assigned",
+  "label": "The Voucher Screen",
+  "buildPath": "code",
+  "via": "structured question tool (the decision page closed without an answer, exit 4)",
+  "date": "2026-09-27"
+}
